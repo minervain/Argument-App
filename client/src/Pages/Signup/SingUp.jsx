@@ -1,6 +1,6 @@
 import axios from "axios";
 import { useState } from "react"
-
+import { signUp } from "./api";
 export function SignUp() {
     const [username, setUsername] = useState();
     const [email, setEmail] = useState();
@@ -9,21 +9,25 @@ export function SignUp() {
     const [apiProgress, setApiProgress] = useState(false);
     const [succesmessage, setMessage] = useState();
 
-    const onSubmit = (e) => {
+    const onSubmit = async (e) => {
         e.preventDefault();
         setApiProgress(true)
         setMessage();
 
-        axios.post('/api/v1/users',
-            {
-                username,
-                email,
-                password
-            })
-            .then((response) => {
-                setMessage(response.data.message)
-            })
-            .finally(setApiProgress(false))
+        try {
+            const response = await signUp(
+                {
+                    username,
+                    email,
+                    password
+                })
+            setMessage(response.data.message)
+        }
+        catch {
+
+        }
+        finally { setApiProgress(false) }
+
     }
 
 
