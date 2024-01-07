@@ -1,4 +1,4 @@
-import { useState } from "react"
+import { useMemo, useState } from "react"
 import { signUp } from "./api";
 import { Axios } from "axios";
 import InputS from "./Components/input";
@@ -38,6 +38,16 @@ export function SignUp() {
 
     }
 
+    const passwordRepeatError = useMemo(() => {
+        if (password && password != passwordRepeat) {
+            return "password mismatch"
+        }
+        return ''
+
+    }, [password, passwordRepeat]);
+
+
+
 
     return (
 
@@ -57,7 +67,7 @@ export function SignUp() {
 
                         <InputS id={password} label={"Password"} onChange={(e) => setPassword(e.target.value)} />
 
-                        <InputS id={password} label={"Repeat Password"} onChange={(e) => setPasswordRepeat(e.target.value)} />
+                        <InputS id={password} label={"Repeat Password"} onChange={(e) => setPasswordRepeat(e.target.value)} error={passwordRepeatError} />
 
                         <div>{succesmessage && <div className="alert alert-success" role="alert"> {succesmessage}</div>
 

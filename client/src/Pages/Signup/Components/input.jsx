@@ -9,8 +9,10 @@ function InputS(props) {
                 <input
                     id={props.id}
                     className={"form-control"} onChange={props.onChange} />
+                <div>{props.error && <div>
+                    {props.error}</div>}</div>
             </div>
-            </div>
+        </div>
     )
 }
 
