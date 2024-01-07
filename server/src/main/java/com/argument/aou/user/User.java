@@ -1,18 +1,24 @@
 package com.argument.aou.user;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
 
 @Entity
-@Table(name="Kullanıcılar")
+@Table(name="Kullanıcılar",uniqueConstraints = @UniqueConstraint(columnNames = {"email"}))
 public class User {
     @Id
     @GeneratedValue
     long id;
+    @NotBlank
+    @Size(min = 4 ,max=255)
     String username;
+    @NotBlank
+    @Email
     String email;
+    @Size(min = 8 ,max=255)
+
     String password;
 
     public String getUsername() {

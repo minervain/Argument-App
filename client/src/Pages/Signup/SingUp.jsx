@@ -49,7 +49,7 @@ export function SignUp() {
                     </div>
                     <div className="card-body">
                         <InputS id={username} label={"Username"} onChange={(e) => setUsername(e.target.value)} />
-                      
+
                         {errormessage && <div className="invalid-feedback">
                             {errormessage.username}
                         </div>}
