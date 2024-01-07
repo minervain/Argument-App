@@ -9,7 +9,7 @@ public class ApiError {
     private String message;
     private String path;
     private long timestamp=new Date().getTime();
-    private Map <String,String> validationErrors=new HashMap<>();
+    private Map<String,String> validationErrors=new HashMap<>();
 
     public int getStatus() {
         return status;

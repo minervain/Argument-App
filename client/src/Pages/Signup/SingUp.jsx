@@ -1,6 +1,7 @@
-import axios from "axios";
 import { useState } from "react"
 import { signUp } from "./api";
+import { Axios } from "axios";
+import InputS from "./Components/input";
 export function SignUp() {
     const [username, setUsername] = useState();
     const [email, setEmail] = useState();
@@ -8,6 +9,8 @@ export function SignUp() {
     const [passwordRepeat, setPasswordRepeat] = useState();
     const [apiProgress, setApiProgress] = useState(false);
     const [succesmessage, setMessage] = useState();
+    const [errormessage, setErrormessage] = useState("");
+
 
     const onSubmit = async (e) => {
         e.preventDefault();
@@ -23,7 +26,12 @@ export function SignUp() {
                 })
             setMessage(response.data.message)
         }
-        catch {
+        catch (err) {
+            if (err.response?.data && err.response.data.status === 400) {
+                console.log(err)
+                setErrormessage(err.response.validationErrors
+                )
+            }
 
         }
         finally { setApiProgress(false) }
@@ -40,23 +48,17 @@ export function SignUp() {
                         <h1>Sign Up</h1>
                     </div>
                     <div className="card-body">
-                        <div className="mb-3">
+                        <InputS id={username} label={"Username"} onChange={(e) => setUsername(e.target.value)} />
+                      
+                        {errormessage && <div className="invalid-feedback">
+                            {errormessage.username}
+                        </div>}
+                        <InputS id={email} label={"E-mail"} onChange={(e) => setEmail(e.target.value)} />
 
-                            <label htmlFor="username" className="form-label" >Username</label>
-                            <input id="username" className="form-control" onChange={(e) => setUsername(e.target.value)} />
-                        </div>
-                        <div className="mb-3">
-                            <label htmlFor="email" className="form-label">E-mail</label>
-                            <input id="email" className="form-control" onChange={(e) => setEmail(e.target.value)} />
-                        </div>
-                        <div className="mb-3">
-                            <label htmlFor="password" className="form-label">Password</label>
-                            <input id="password" className="form-control" type="password" onChange={(e) => setPassword(e.target.value)} />
-                        </div>
-                        <div className="mb-3">
-                            <label htmlFor="passwordRepeat" className="form-label" >Repeat Password</label>
-                            <input id="passwordRepeat" className="form-control" type="password" onChange={(e) => setPasswordRepeat(e.target.value)} />
-                        </div>
+                        <InputS id={password} label={"Password"} onChange={(e) => setPassword(e.target.value)} />
+
+                        <InputS id={password} label={"Repeat Password"} onChange={(e) => setPasswordRepeat(e.target.value)} />
+
                         <div>{succesmessage && <div className="alert alert-success" role="alert"> {succesmessage}</div>
 
                         }</div>
