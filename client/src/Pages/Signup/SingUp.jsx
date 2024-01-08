@@ -2,6 +2,8 @@ import { useMemo, useState } from "react"
 import { signUp } from "./api";
 import { Axios } from "axios";
 import InputS from "./Components/input";
+import { useTranslation } from "react-i18next";
+import LangugageSelect from "../../shared/Components/LangugageSelect";
 export function SignUp() {
     const [username, setUsername] = useState();
     const [email, setEmail] = useState();
@@ -10,6 +12,7 @@ export function SignUp() {
     const [apiProgress, setApiProgress] = useState(false);
     const [succesmessage, setMessage] = useState();
     const [errormessage, setErrormessage] = useState("");
+    const {t}=useTranslation();
 
 
     const onSubmit = async (e) => {
@@ -40,7 +43,7 @@ export function SignUp() {
 
     const passwordRepeatError = useMemo(() => {
         if (password && password != passwordRepeat) {
-            return "password mismatch"
+            return t('passwordMismatch')
         }
         return ''
 
@@ -55,19 +58,19 @@ export function SignUp() {
             <div className="col-lg-6 offset-lg-3 col-sm-8 offset-sm-2 ">
                 <form onSubmit={onSubmit} className="card" >
                     <div className="card-header">
-                        <h1>Sign Up</h1>
+                        <h1>{t('signUp')}</h1>
                     </div>
                     <div className="card-body">
-                        <InputS id={username} label={"Username"} onChange={(e) => setUsername(e.target.value)} />
+                        <InputS id={username} label={t("username")} onChange={(e) => setUsername(e.target.value)} />
 
                         {errormessage && <div className="invalid-feedback">
                             {errormessage.username}
                         </div>}
-                        <InputS id={email} label={"E-mail"} onChange={(e) => setEmail(e.target.value)} />
+                        <InputS id={email} label={t("email")} onChange={(e) => setEmail(e.target.value)} />
 
-                        <InputS id={password} label={"Password"} onChange={(e) => setPassword(e.target.value)} />
+                        <InputS id={password} label={t("password")} onChange={(e) => setPassword(e.target.value)} />
 
-                        <InputS id={password} label={"Repeat Password"} onChange={(e) => setPasswordRepeat(e.target.value)} error={passwordRepeatError} />
+                        <InputS id={password} label={t("passwordRepeat")} onChange={(e) => setPasswordRepeat(e.target.value)} error={passwordRepeatError} />
 
                         <div>{succesmessage && <div className="alert alert-success" role="alert"> {succesmessage}</div>
 
@@ -77,9 +80,11 @@ export function SignUp() {
                                 {apiProgress &&
                                     <div className="spinner-border" role="status">
                                         <span className="visually-hidden">Loading...</span>
-                                    </div>}Sign Up</button>
+                                    </div>}{t('signbtn')}</button>
                         </div>
                     </div>
+                    <LangugageSelect/>
+
                 </form>
             </div>
         </div>
