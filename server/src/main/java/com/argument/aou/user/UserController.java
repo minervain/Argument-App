@@ -2,6 +2,7 @@ package com.argument.aou.user;
 
 import com.argument.aou.Error.ApiError;
 import com.argument.aou.Shared.GenericMessage;
+import com.argument.aou.dto.UserCreate;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -21,9 +22,9 @@ public class UserController {
     UserService userService;
 
     @PostMapping("/api/v1/users")
-    ResponseEntity<?> createUser(@Valid @RequestBody User user) {
+    ResponseEntity<?> createUser(@Valid @RequestBody UserCreate user) {
 
-        userService.save(user);
+        userService.save(user.toUser());
         return ResponseEntity.ok(new GenericMessage("User Oluşturuldu"));
     }
 
